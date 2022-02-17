@@ -6,6 +6,6 @@ module.exports = {
   plugins: [
     new DefinePlugin({
       'process.env.name': JSON.stringify('Grosh'),
-    })
+    }),
   ],
 };
