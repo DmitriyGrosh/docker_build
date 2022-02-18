@@ -1,35 +1,26 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+import express from 'express';
+import config from 'config';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
-const Item = require("./models/item");
+import log from './logger';
+import connect from './db';
+import router from './router';
+
+const port = config.get<number>('port');
+const host = config.get<string>('host');
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(cors())
-app.use(bodyParser.json())
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-mongoose.connect('mongodb://mongo:27017/docker-node-mongo')
-	.then(() => console.log('==========>mongoDB connected'))
-	.catch((e: any) => console.log('==========>e', e));
+app.listen(port, host, () => {
+	log.info(`Server listening at http://${host}:${port}`);
 
-// @ts-ignore
-app.get('/', (request, response) => {
-	console.log('==========>1', 1);
-	response.send('Hello World!')
+	connect();
+
+	router(app);
 });
-
-// @ts-ignore
-app.post('/items/add', (request, response) => {
-	const newItem = new Item({
-		name: request.body
-	});
-
-	newItem.save().then(() => response.sendStatus(200));
-});
-
-
-const port = 5000;
-app.listen(port, () => console.log(`Running on port ${port}`));
