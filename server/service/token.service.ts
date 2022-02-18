@@ -33,6 +33,12 @@ class TokenService {
 
 		return tokenData;
 	};
+
+	public findToken(refreshToken: string) {
+		const tokenData = TokenModel.findOne({ refreshToken });
+
+		return tokenData;
+	};
 }
 
 const tokenService = new TokenService();

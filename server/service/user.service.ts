@@ -6,6 +6,8 @@ import { UserModel } from '../models';
 import mailService from './mail.service';
 import tokenService from './token.service';
 import { UserDto}  from '../dtos';
+import { refreshTokenValidate } from '../validation';
+import { IUser } from '../models/user.model';
 
 interface IRegistration {
 	refreshToken: string;
@@ -77,6 +79,35 @@ class UserService {
 		const token = await tokenService.removeToken(refreshToken);
 
 		return token;
+	}
+
+	public async refresh(refreshToken: string): Promise<IRegistration> {
+		if (!refreshToken) {
+			throw new Error('Пользователь не авторизован');
+		}
+
+		const userData = refreshTokenValidate(refreshToken);
+		const tokenFromDb = await tokenService.findToken(refreshToken);
+
+		if (!userData || !tokenFromDb) {
+			throw new Error('Пользователь не авторизован');
+		}
+
+		const user = await UserModel.findById((userData as IUser & { id: string }).id);
+
+		if (!user) {
+			throw new Error('Пользователь не авторизован');
+		}
+
+		const userDto = new UserDto(user);
+		const tokens = tokenService.generateTokens({ ...userDto });
+
+		await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+		return {
+			...tokens,
+			user: userDto,
+		};
 	}
 }
 

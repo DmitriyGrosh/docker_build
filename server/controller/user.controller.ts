@@ -58,3 +58,18 @@ export const logoutHandler = async (req: Request, res: Response) => {
 		log.error(e);
 	}
 };
+
+export const refreshTokenHandler = async (req: Request, res: Response) => {
+	try {
+		const { refreshToken } = req.cookies;
+
+		const userData = await userService.refresh(refreshToken);
+
+		res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
+
+		return res.json(userData);
+	} catch (e: any) {
+		res.status(401).send(e.message);
+		log.error(e);
+	}
+};
