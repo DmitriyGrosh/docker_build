@@ -47,7 +47,7 @@ class UserService {
 
 		user.isActivated = true;
 		await user.save();
-	}
+	};
 
 	public async login(email: string, password: string): Promise<IRegistration> {
 		const user = await UserModel.findOne({ email });
@@ -71,6 +71,12 @@ class UserService {
 			...tokens,
 			user: userDto,
 		};
+	};
+
+	public async logout(refreshToken: string) {
+		const token = await tokenService.removeToken(refreshToken);
+
+		return token;
 	}
 }
 

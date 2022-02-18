@@ -34,11 +34,25 @@ export const activateUserHandler = async (req: Request, res: Response) => {
 export const loginHandler = async (req: Request, res: Response) => {
 	try {
 		const { email, password } = req.body;
-
 		const userData = await userService.login(email, password);
+
 		res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
 
 		return res.json(userData);
+	} catch (e: any) {
+		res.status(401).send(e.message);
+		log.error(e);
+	}
+};
+
+export const logoutHandler = async (req: Request, res: Response) => {
+	try {
+		const { refreshToken } = req.cookies;
+
+		userService.logout(refreshToken);
+		res.clearCookie('refreshToken');
+
+		res.sendStatus(200);
 	} catch (e: any) {
 		res.status(401).send(e.message);
 		log.error(e);

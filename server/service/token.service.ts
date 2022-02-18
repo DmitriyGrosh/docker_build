@@ -26,7 +26,13 @@ class TokenService {
 		const token = TokenModel.create({ user: userId, refreshToken });
 
 		return token;
-	}
+	};
+
+	public removeToken(refreshToken: string) {
+		const tokenData = TokenModel.deleteOne({ refreshToken });
+
+		return tokenData;
+	};
 }
 
 const tokenService = new TokenService();
