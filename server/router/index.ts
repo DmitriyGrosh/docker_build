@@ -3,10 +3,6 @@ import { Express, Request, Response } from 'express';
 import { createRegistrationHandler, activateUserHandler } from '../controller/user.controller';
 
 const router = (app: Express) => {
-	app.get('/', (req: Request, res: Response ) => {
-		res.send('Hello World');
-	});
-
 	app.post('/api/registration', createRegistrationHandler);
 	// app.post('/api/login');
 	// app.post('/api/logout');
