@@ -12,6 +12,7 @@ interface IRegistration {
 	accessToken: string;
 	user: UserDto
 }
+
 class UserService {
 	public async registration(email: string, password: string, name: string): Promise<IRegistration> {
 		const candidate =  await UserModel.findOne({ email });
@@ -46,6 +47,30 @@ class UserService {
 
 		user.isActivated = true;
 		await user.save();
+	}
+
+	public async login(email: string, password: string): Promise<IRegistration> {
+		const user = await UserModel.findOne({ email });
+
+		if (!user) {
+			throw new Error(`Пользователя с таким ${email} не существует`)
+		}
+
+		const isEqualPassword = await bcrypt.compare(password, user.password);
+
+		if (!isEqualPassword) {
+			throw new Error(`Некорректный пароль`);
+		}
+
+		const userDto = new UserDto(user);
+		const tokens = tokenService.generateTokens({ ...userDto });
+
+		await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+		return {
+			...tokens,
+			user: userDto,
+		};
 	}
 }
 
