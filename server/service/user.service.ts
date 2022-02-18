@@ -7,8 +7,13 @@ import mailService from './mail.service';
 import tokenService from './token.service';
 import UserDto from '../dtos/user.dto';
 
+interface IRegistration {
+	refreshToken: string;
+	accessToken: string;
+	user: UserDto
+}
 class UserService {
-	public async registration(email: string, password: string, name: string): Promise<{ refreshToken: string, accessToken: string, user: UserDto }> {
+	public async registration(email: string, password: string, name: string): Promise<IRegistration> {
 		const candidate =  await UserModel.findOne({ email });
 
 		if (candidate) {
@@ -32,7 +37,7 @@ class UserService {
 			user: userDto,
 		};
 	}
-};
+}
 
 const userService = new UserService();
 
