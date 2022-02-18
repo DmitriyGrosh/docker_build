@@ -5,7 +5,7 @@ import * as uuid from 'uuid';
 import { UserModel } from '../models';
 import mailService from './mail.service';
 import tokenService from './token.service';
-import UserDto from '../dtos/user.dto';
+import { UserDto}  from '../dtos';
 
 interface IRegistration {
 	refreshToken: string;

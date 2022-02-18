@@ -1,9 +1,11 @@
-import { Express, Request, Response } from 'express';
+import { Express } from 'express';
 
-import { createRegistrationHandler, activateUserHandler } from '../controller/user.controller';
+import { validateDto } from '../dtos';
+import { createRegistrationHandler, activateUserHandler } from '../controller';
+import { registrationValidation } from '../validation';
 
 const router = (app: Express) => {
-	app.post('/api/registration', createRegistrationHandler);
+	app.post('/api/registration', validateDto(registrationValidation), createRegistrationHandler);
 	// app.post('/api/login');
 	// app.post('/api/logout');
 	app.get('/api/activate/:link', activateUserHandler);

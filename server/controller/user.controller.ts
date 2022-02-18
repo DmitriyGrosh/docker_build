@@ -1,10 +1,10 @@
 import { Response, Request, NextFunction } from 'express';
+import config from 'config';
 
 import { userService } from '../service';
 import log from '../logger'
-import config from "config";
 
-export const createRegistrationHandler = async (req: Request, res: Response, next: NextFunction) => {
+export const createRegistrationHandler = async (req: Request, res: Response) => {
 	try {
 		const { email, name, password} = req.body;
 
