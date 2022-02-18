@@ -9,4 +9,5 @@ export default {
 	smtpUser: 'test.server.grosh@gmail.com',
 	smtpPassword: '7K7-3wP-rBX-Ufn',
 	apiUrl: 'http://localhost:5000',
+	clientUrl: 'http://localhost:3000'
 };

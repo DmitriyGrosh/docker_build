@@ -36,6 +36,16 @@ class UserService {
 			...tokens,
 			user: userDto,
 		};
+	};
+
+	public async activate(activationLink: string) {
+		const user = await UserModel.findOne({ activationLink });
+		if (!user) {
+			throw new Error('Неактивная ссылка активации');
+		}
+
+		user.isActivated = true;
+		await user.save();
 	}
 }
 
