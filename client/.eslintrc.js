@@ -89,6 +89,7 @@ module.exports = {
     'quotes': ['error', 'single', { allowTemplateLiterals: true }],
     'eqeqeq': ['error', 'always'],
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
+    'no-restricted-exports': ['warn', { restrictedNamedExports: ['default'] }],
   },
   overrides: [
     {

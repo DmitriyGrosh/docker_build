@@ -13,7 +13,7 @@ export const createRegistrationHandler = async (req: Request, res: Response) => 
 
 		return res.json(userData);
 	} catch (e: any) {
-		res.status(401).send(e.message);
+		res.status(400).send(e.message);
 		log.error(e);
 	}
 };
@@ -26,7 +26,7 @@ export const activateUserHandler = async (req: Request, res: Response) => {
 
 		return res.redirect(config.get('clientUrl'))
 	} catch (e: any) {
-		res.status(401).send(e.message);
+		res.status(400).send(e.message);
 		log.error(e);
 	}
 };
@@ -40,7 +40,7 @@ export const loginHandler = async (req: Request, res: Response) => {
 
 		return res.json(userData);
 	} catch (e: any) {
-		res.status(401).send(e.message);
+		res.status(400).send(e.message);
 		log.error(e);
 	}
 };
@@ -54,7 +54,7 @@ export const logoutHandler = async (req: Request, res: Response) => {
 
 		res.sendStatus(200);
 	} catch (e: any) {
-		res.status(401).send(e.message);
+		res.status(400).send(e.message);
 		log.error(e);
 	}
 };
@@ -69,7 +69,7 @@ export const refreshTokenHandler = async (req: Request, res: Response) => {
 
 		return res.json(userData);
 	} catch (e: any) {
-		res.status(401).send(e.message);
+		res.status(400).send(e.message);
 		log.error(e);
 	}
 };
@@ -80,7 +80,7 @@ export const getUsersHandler = async (req: Request, res: Response) => {
 
 		return res.json(users);
 	} catch (e: any) {
-		res.status(401).send(e.message);
+		res.status(400).send(e.message);
 		log.error(e);
 	}
 };

@@ -1,7 +1,28 @@
-.container {
-	background: red;
+* {
+	margin: 0;
+	padding: 0;
+}
 
-	.item {
-		color: white;
-	}
+html, body, #root {
+	height: 100%;
+}
+
+.auth-container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+header {
+	flex: 0 0 auto;
+}
+
+.main-container {
+	flex: 1 0 auto;
+	display: flex;
+	flex-direction: column;
+}
+
+footer {
+	flex: 0 0 auto;
 }

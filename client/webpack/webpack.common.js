@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   entry: path.resolve(__dirname, '..', './src/app/index.tsx'),
@@ -40,14 +39,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '..', './src/app/index.html'),
     }),
-    // new ForkTsCheckerWebpackPlugin({
-    //   eslint: {
-    //     files: path.resolve(__dirname, '..', './src/**/*.{ts,tsx,js,jsx}'),
-    //   },
-    // }),
   ],
   devServer: {
-    host: '0.0.0.0',
+    host: 'localhost',
     port: 3000,
     open: true,
     historyApiFallback: true,
