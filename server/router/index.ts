@@ -6,9 +6,11 @@ import {
 	activateUserHandler,
 	loginHandler,
 	logoutHandler,
-	refreshTokenHandler
+	refreshTokenHandler,
+	getUsersHandler,
 } from '../controller';
 import { registrationValidation, loginValidation } from '../validation';
+import authMiddleware from '../middleware/auth.middleware';
 
 const router = (app: Express) => {
 	app.post('/api/registration', validateDto(registrationValidation), createRegistrationHandler);
@@ -16,6 +18,7 @@ const router = (app: Express) => {
 	app.get('/api/logout', logoutHandler);
 	app.get('/api/activate/:link', activateUserHandler);
 	app.get('/api/refresh', refreshTokenHandler);
+	app.get('/api/users', authMiddleware, getUsersHandler);
 
 };
 

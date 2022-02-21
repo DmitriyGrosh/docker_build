@@ -73,3 +73,14 @@ export const refreshTokenHandler = async (req: Request, res: Response) => {
 		log.error(e);
 	}
 };
+
+export const getUsersHandler = async (req: Request, res: Response) => {
+	try {
+		const users = await userService.getUsers();
+
+		return res.json(users);
+	} catch (e: any) {
+		res.status(401).send(e.message);
+		log.error(e);
+	}
+};
