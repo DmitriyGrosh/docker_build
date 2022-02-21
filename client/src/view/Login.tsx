@@ -3,6 +3,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import api, { IAxiosRefreshResponse } from '../shared/api';
 import Form from '../shared/ui/form';
+import { setUser } from '../redux/slices/userSlice';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 
 type FormValues = {
   email: string;
@@ -10,15 +12,23 @@ type FormValues = {
 };
 
 const Login: FC = () => {
+  const dispatch = useAppDispatch();
   const { handleSubmit, register } = useForm<FormValues>();
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    console.log('==========>data', data);
+  const onSubmit: SubmitHandler<FormValues> = async (values) => {
     try {
-      const user = await api.post<IAxiosRefreshResponse>('/login', data);
+      const user = await api.post<IAxiosRefreshResponse>('/login', values);
       console.log('==========>user', user);
 
       localStorage.setItem('token', user.data.accessToken);
+
+      const data = {
+        name: user.data.user.name,
+        email: user.data.user.email,
+        isAuth: true,
+      };
+
+      dispatch(setUser(data));
     } catch (e) {
       console.log('==========>e', e);
     }

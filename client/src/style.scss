@@ -3,11 +3,14 @@
 	padding: 0;
 }
 
-html, body, #root {
+html,
+body,
+#root,
+.auth-container {
 	height: 100%;
 }
 
-.auth-container {
+.layout {
 	display: flex;
 	flex-direction: column;
 	height: 100%;

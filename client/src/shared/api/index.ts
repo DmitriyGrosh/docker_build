@@ -3,6 +3,10 @@ import axios, { AxiosRequestConfig } from 'axios';
 export interface IAxiosRefreshResponse {
   refreshToken: string;
   accessToken: string;
+  user: {
+    name: string;
+    email: string;
+  };
 }
 
 export const API_URL = 'http://localhost:5000/api';
@@ -15,7 +19,6 @@ const api = axios.create({
 // eslint-disable-next-line consistent-return
 api.interceptors.request.use((config: AxiosRequestConfig) => {
   if (config.headers) {
-    // eslint-disable-next-line no-param-reassign
     config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
 
     return config;

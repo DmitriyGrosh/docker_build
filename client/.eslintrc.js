@@ -90,6 +90,7 @@ module.exports = {
     'eqeqeq': ['error', 'always'],
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
     'no-restricted-exports': ['warn', { restrictedNamedExports: ['default'] }],
+    'no-param-reassign': 'warn',
   },
   overrides: [
     {

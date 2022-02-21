@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
-import AuthContainer from './features/auth.container/AuthContainer';
+import AuthContainer from './features/auth.container/ui/AuthContainer';
 import Router from './router';
+
+import { store } from './redux/store';
 
 import './style.scss';
 
 const App = () => (
-  <AuthContainer>
+  <Provider store={store}>
     <BrowserRouter>
-      <Router />
+      <AuthContainer>
+        <Router />
+      </AuthContainer>
     </BrowserRouter>
-  </AuthContainer>
+  </Provider>
 );
 
 App.displayName = 'App';
