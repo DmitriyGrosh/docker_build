@@ -5,7 +5,7 @@ import { TokenModel } from '../models';
 
 class TokenService {
 	public generateTokens(payload: any): { refreshToken: string, accessToken: string } {
-		const accessToken = jwt.sign(payload, config.get('secretAccessKey'), { expiresIn: '15s' });
+		const accessToken = jwt.sign(payload, config.get('secretAccessKey'), { expiresIn: '30m' });
 		const refreshToken = jwt.sign(payload, config.get('secretRefreshKey'), { expiresIn: '30d' });
 
 		return {

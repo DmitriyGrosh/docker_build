@@ -19,6 +19,9 @@ const router = (app: Express) => {
 	app.get('/api/activate/:link', activateUserHandler);
 	app.get('/api/refresh', refreshTokenHandler);
 	app.get('/api/users', authMiddleware, getUsersHandler);
+	app.get('/api', (req, res) => {
+		res.send('Hello world')
+	})
 
 };
 

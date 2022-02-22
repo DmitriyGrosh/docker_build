@@ -3,7 +3,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import api, { IAxiosRefreshResponse } from '../shared/api';
 import Form from '../shared/ui/form';
-import { setUser } from '../redux/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 
 type FormValues = {
@@ -27,8 +26,6 @@ const Login: FC = () => {
         email: user.data.user.email,
         isAuth: true,
       };
-
-      dispatch(setUser(data));
     } catch (e) {
       console.log('==========>e', e);
     }

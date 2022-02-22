@@ -1,46 +1,19 @@
-import React, { FC, useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { FC, useEffect } from 'react';
 
-import { useAppDispatch } from '../../../redux/hooks';
-import { setUser } from '../../../redux/slices/userSlice';
-import { API_URL, IAxiosRefreshResponse } from '../../../shared/api';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { getRefresh } from '../../../redux/thunks';
 
 const AuthContainer: FC = ({ children }) => {
-  const [pending, setPending] = useState<boolean>(false);
+  const { pending } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  const initAuth = async () => {
-    try {
-      const response = await axios.get<IAxiosRefreshResponse>(`${API_URL}/refresh`, { withCredentials: true });
-
-      localStorage.setItem('token', response.data.accessToken);
-
-      const data = {
-        name: 'response.data.user.name',
-        email: response.data.user.email,
-        isAuth: true,
-      };
-
-      dispatch(setUser(data));
-      setPending(true);
-    } catch (e) {
-      const data = {
-        name: '',
-        email: '',
-        isAuth: false,
-      };
-
-      dispatch(setUser(data));
-      setPending(true);
-    }
-  };
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      initAuth();
+      dispatch(getRefresh());
     }
   }, []);
 
-  if (!pending) {
+  if (pending) {
     return <>Loading ...</>;
   }
 
