@@ -20,24 +20,49 @@ const initialState: IUser = {
 export const userSlicer = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    stopPending: (state) => {
+      state.pending = false;
+    },
+    setLogin: (state, action: PayloadAction<{ name: string; email: string }>) => {
+      const { email, name } = action.payload;
+
+      return {
+        ...state,
+        email,
+        name,
+        isAuth: true,
+        pending: false,
+      };
+    },
+  },
   extraReducers: {
     [getRefresh.pending.type]: (state) => {
       state.pending = true;
     },
     [getRefresh.fulfilled.type]: (state, action: PayloadAction<IAxiosRefreshResponse>) => {
-      state.email = action.payload.user.email;
-      state.name = action.payload.user.name;
-      state.isAuth = true;
-      state.pending = false;
+      const { email, name } = action.payload.user;
+
+      return {
+        ...state,
+        email,
+        name,
+        isAuth: true,
+        pending: false,
+      };
     },
     [getRefresh.rejected.type]: (state) => {
-      state.pending = false;
-      state.isAuth = false;
-      state.email = '';
-      state.name = '';
+      return {
+        ...state,
+        pending: false,
+        isAuth: false,
+        email: '',
+        name: '',
+      };
     },
   },
 });
+
+export const { stopPending, setLogin } = userSlicer.actions;
 
 export default userSlicer.reducer;

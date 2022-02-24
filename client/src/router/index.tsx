@@ -2,9 +2,9 @@ import React, { FC, ComponentType, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 
-import Login from '../view/Login';
+import Login from '../view/login';
 import Home from '../view/Home';
-import Header from '../widgets/Header';
+import Register from '../view/register';
 
 const Router = () => {
   return (
@@ -13,6 +13,7 @@ const Router = () => {
         <Route path='/' element={<Home />} />
       </Route>
       <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
     </Routes>
   );
 };

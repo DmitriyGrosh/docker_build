@@ -7,6 +7,7 @@ import log from '../logger'
 export const createRegistrationHandler = async (req: Request, res: Response) => {
 	try {
 		const { email, name, password} = req.body;
+		console.log('==========>1', 1);
 
 		const userData = await userService.registration(email, password, name);
 		res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
@@ -62,6 +63,7 @@ export const logoutHandler = async (req: Request, res: Response) => {
 export const refreshTokenHandler = async (req: Request, res: Response) => {
 	try {
 		const { refreshToken } = req.cookies;
+		console.log('==========>refreshToken', refreshToken);
 
 		const userData = await userService.refresh(refreshToken);
 
